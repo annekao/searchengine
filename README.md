@@ -1,4 +1,7 @@
-project_annekao
-===============
+##CSCI 104 Project Repository
 
-Private Repository for CS 104 Assignments
+###Student Information
+  + Name: Tommy Trojan
+  + USC Email: ttrojan@usc.edu
+  + USC ID: 0123456789
+
