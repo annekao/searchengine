@@ -1,15 +1,6 @@
-UNAME_S=$(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-    CC=g++-4.8
-else
-    ifeq ($(UNAME_S),Darwin)
-        CC=g++-4.8
-    else
-        CC=g++
-    endif
-endif
+CC = g++
 
-CPPFLAGS = -std=c++11 -Wall -g 
+CPPFLAGS = -Wall -g 
 SRC_DIR = lib
 OBJ_DIR = bin
 
