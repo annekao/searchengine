@@ -73,10 +73,10 @@ List<T>::List()
 }
 
 template<class T>
-List<T>::List(const List<T> & other){
-  _size = 0;
-  for (int i = 0; i < other._size; i++)
+List<T>::List(const List<T> & other) : head(NULL), tail(NULL), _size(0){
+  for (int i = 0; i < other._size; i++){
     insert(i, other.get(i));
+  }
 }
 
 template<class T>
@@ -87,7 +87,6 @@ List<T>& List<T>::operator=(const List<T> & other){
   _size = 0;
   for (int i = 0; i < other._size; i++){ //copies each item over
     insert(i, other.get(i));
-    _size++;
   }
   return *this;
 }
@@ -95,8 +94,8 @@ List<T>& List<T>::operator=(const List<T> & other){
 template<class T>
 List<T>::~List(){
   delete newptr;
-  delete head;
-  delete tail; //this was uncommented for hw3... causes an abort
+  delete head;  
+  //delete tail; 
 }
 
 template<class T>

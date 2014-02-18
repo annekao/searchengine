@@ -73,8 +73,7 @@ Set<T>::Set(){
 }
 
 template<class T>
-Set<T>::Set(const Set<T> & other){
-  internalStorage(other.internalStorage);
+Set<T>::Set(const Set<T>& other) : internalStorage(other.internalStorage), index(0){
 }
 
 template<class T>
@@ -98,8 +97,7 @@ void Set<T>::remove(const T & item){
   }
   for (int i = 0; i < size(); i++){
     if(internalStorage.get(i) == item){
-      //internalStorage.remove(i);
-      break;
+      internalStorage.remove(i);
     }
   }
 }
@@ -128,21 +126,29 @@ bool Set<T>::isEmpty() const{
 
 template<class T>
 Set<T> Set<T>::setIntersection(const Set<T> & other) const{
-  Set<T>* newsetI = new Set<T>;
+  Set<T> newset; 
   for(int i = 0; i < other.size(); i++){
-    for(int j = 0; j < this.size(); j++){
-      if (contains(internalStorage.get(i)) == contains(internalStorage.get(j)))
-        newsetI.add(internalStorage.get(i));
+    for(int j = 0; j < size(); j++){
+      if (contains(other.internalStorage.get(i)) == contains(internalStorage.get(j)))
+        newset.add(other.internalStorage.get(i));
+      break;
     }
   }
-  return newsetI;
+  return newset;
 }
 
 template<class T>
 Set<T> Set<T>::setUnion(const Set<T> & other) const{
-  Set<T>* newsetU = new Set<T>;
-
-  return newsetU;
+  Set<T> newset;
+  for(int i = 0; i < other.size(); i++)
+    newset.add(other.internalStorage.get(i));
+  for(int i = 0; i < size(); i++){
+    if(newset.contains(internalStorage.get(i)))
+      continue;
+    else
+      newset.add(internalStorage.get(i));
+  }
+  return newset;
 }
 
 template<class T>
@@ -155,7 +161,9 @@ T* Set<T>::first(){
 template<class T>
 T* Set<T>::next(){
   index++;
-  if(isEmpty()==true||index == size())
+  if(isEmpty()==true||index == size()){
+    index = 0;
     return NULL;
+  }
   return &internalStorage.get(index);
 }
