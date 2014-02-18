@@ -70,13 +70,13 @@ List<T>::List()
   //initialize list to empty
   head = NULL;
   tail = NULL;
+  newptr = NULL;
   _size = 0;
-  cout << "in list constructor" << endl;
 }
 
 template<class T>
 List<T>::List(const List<T> & other) : 
-                head(NULL), tail(NULL), _size(0){
+                head(NULL), tail(NULL), _size(0), newptr(NULL){
   for (int i = 0; i < other._size; i++){
     insert(i, other.get(i));
   }
@@ -86,6 +86,7 @@ template<class T>
 List<T>& List<T>::operator=(const List<T> & other){
   if(this == &other) return *this; //check if its already equal to itself
   if(head != NULL) delete[] head; //clean up what was already in it
+  if(newptr != NULL) delete[] newptr; //clean up what was already in it
   if(tail != NULL) delete[] tail; //clean up what was already in it
   _size = 0;
   for (int i = 0; i < other._size; i++){ //copies each item over

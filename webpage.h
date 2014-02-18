@@ -2,6 +2,7 @@
 #ifndef WEBPAGE_H_
 #define WEBPAGE_H_
 #include <fstream>
+#include <stdio.h>
 #include <ctype.h>
 #include "lib/set.h"
 
@@ -18,10 +19,12 @@ class WebPage {
     Set<string> allWords () const;
       /* Returns a set containing all individual words on the web page. */   
 
-   // friend ostream & operator<< (ostream & os, const WebPage & page);
+    friend ostream & operator<< (ostream & os, const WebPage & page);
       /* Declares an operator we can use to print the web page. */
 
   private:
+    string infile;
+    Set<string>* sfile;
     // you get to decide what goes here.
 };
 #endif
@@ -29,27 +32,51 @@ class WebPage {
 WebPage::WebPage(){
 }
 
-WebPage::WebPage(string filename){
-  fin.open(filename);
+WebPage::WebPage(string filename) :
+                  infile(filename){
+  fin.open(infile);
   if(!fin){
     throw logic_error("Invalid file. Exiting program.");
   }
-}
-
-WebPage::~WebPage(){
+  string temp;
+  sfile = new Set<string>;
+  while(getline(fin,temp))
+    sfile->add(temp);
   fin.close();
 }
 
-Set<string> WebPage::allWords () const{
-  cout << "inside allwords";
-  //Set<string> words; 
-  //string line;
-  //getline(fin,line);
-  //cout << line;
-  //words.add(temp);
-  //return words;
+WebPage::~WebPage(){
+  //delete sfile;
 }
 
-//ostream & WebPage::operator<< (ostream & os, const WebPage & page){
+Set<string> WebPage::allWords () const{
+  Set<string> words;
+  string line;
+  for (string* x = sfile->first(); x!= NULL; x=sfile->next()){   
+      string line = *x;  
+  while(!line.empty()){  
+    string temp;
+      int i=0;
+    while(isalnum(line[i])){              //checks if alphanumeric
+      temp.push_back(line[i]);            //pushes back character until next word
+      i++;
+    }
+    int j = 0;
+    while(temp[j]){                      //converts to lower case
+      temp[j] = tolower(temp[j]);
+      j++;
+    }
+    if(words.contains(temp)==false && !temp.empty())  //makes sure there is no duplicate word
+      words.add(temp);
+    line.erase(0,i+1);        //moves to the next word in the string
+  }
+}
+  return words;
+}
 
-//}
+ostream & operator<< (ostream & os, const WebPage & page){
+  for (string* x = page.sfile->first(); x!= NULL; x=page.sfile->next()){
+    os << *x << endl;
+  }
+  return os;
+}

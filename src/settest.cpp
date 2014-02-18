@@ -4,8 +4,6 @@
 
 int main(){
 	try{
-		Set<int> L;
-		/*
 		Set<int> S;
 		if (S.isEmpty())
 			cout << "Set S is empty" << endl;
@@ -53,7 +51,7 @@ int main(){
 		resultU = S.setUnion(test);
 		for (int* x = resultU.first(); x!= NULL; x=resultU.next()){
 			cout <<*x <<endl;
-		}*/
+		}
 	}
 	catch(logic_error &e){
 		cout << e.what();
