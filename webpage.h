@@ -46,7 +46,6 @@ WebPage::WebPage(string filename) :
 }
 
 WebPage::~WebPage(){
-  //delete sfile;
 }
 
 Set<string> WebPage::allWords () const{

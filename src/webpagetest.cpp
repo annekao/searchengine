@@ -17,6 +17,17 @@ int main(){
 		for (string* x = web2.first(); x!= NULL; x=web2.next()){
 			cout << *x << endl;
 		}
+		//Part 4
+		//Map<string, List<webpages>>
+		//represented using file names
+		//hello P1, P2
+		//List<webpages> should spit out everything in the file 
+		//associated with the string using operator<<
+
+		//ostream (polymorphism)
+		// derivations: cout, ofstream, sstream
+		// using the <<operator, it can print out to cout, ofile, ss 
+		//depending on main
 	}
 	catch(logic_error &e){
 		cout << e.what();
