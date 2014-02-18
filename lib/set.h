@@ -2,7 +2,6 @@
 #ifndef SET_H_
 #define SET_H_
 #include "list.h"
-using namespace std;
 
 
 template <class T>
@@ -73,7 +72,8 @@ Set<T>::Set(){
 }
 
 template<class T>
-Set<T>::Set(const Set<T>& other) : internalStorage(other.internalStorage), index(0){
+Set<T>::Set(const Set<T>& other) : 
+              internalStorage(other.internalStorage), index(0){
 }
 
 template<class T>

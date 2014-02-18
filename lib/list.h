@@ -1,6 +1,7 @@
 // necessary includes can go here
 #ifndef LIST_H_
 #define LIST_H_
+#include <string.h>
 using namespace std; 
 
 template <class T>
@@ -70,10 +71,12 @@ List<T>::List()
   head = NULL;
   tail = NULL;
   _size = 0;
+  cout << "in list constructor" << endl;
 }
 
 template<class T>
-List<T>::List(const List<T> & other) : head(NULL), tail(NULL), _size(0){
+List<T>::List(const List<T> & other) : 
+                head(NULL), tail(NULL), _size(0){
   for (int i = 0; i < other._size; i++){
     insert(i, other.get(i));
   }

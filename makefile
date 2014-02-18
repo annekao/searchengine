@@ -10,20 +10,26 @@ else
 endif
 
 CPPFLAGS =-std=c++11 -Wall -g 
-SRC_DIR = lib
-OBJ_DIR = bin
+LIB_DIR = lib
+BIN_DIR = bin
+SRC_DIR = src
 
-_OBJS=$(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(wildcard $(SRC_DIR)/*.cpp))
+_OBJS=$(patsubst $(SRC_DIR)/%,$(BIN_DIR)/%,$(wildcard $(SRC_DIR)/*.cpp))
 OBJS=$(patsubst %.cpp,%.o,$(_OBJS))
 
-all: settest
+all: settest wptest
 
-$(OBJ_DIR)/settest.o: $(SRC_DIR)/settest.cpp $(SRC_DIR)/map.h $(SRC_DIR)/set.h $(SRC_DIR)/list.h
-	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(OBJ_DIR)/
+$(BIN_DIR)/settest.o: $(SRC_DIR)/settest.cpp $(LIB_DIR)/set.h $(LIB_DIR)/list.h
+	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
 
-settest: $(OBJS)
+$(BIN_DIR)/webpagetest.o: $(SRC_DIR)/webpagetest.cpp webpage.h $(LIB_DIR)/set.h $(LIB_DIR)/list.h
+	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
+
+wptest: $(BIN_DIR)/webpagetest.o
+	$(CC) $^ -o $@ $(CPPFLAGS) 
+
+settest: $(BIN_DIR)/settest.o
 	$(CC) $^ -o $@ $(CPPFLAGS) 
 
 clean: 
 	rm -f *.o *~ 
-
