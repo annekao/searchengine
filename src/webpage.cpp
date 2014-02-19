@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
         			and substr the string will be getting rid of those 4 spaces + 2 paranthesis
         			*/
         			//checks if and case and for user syntax
-                    char* ctemp;
+                    char* ctemp = new char[input.size()];
         			if(temp=="and"&&input.find("(")==4&&input.find(")")==input.size()-1){
         			 	temp = input.substr(5,input.size()-6);
                         if(usererrorcheck(temp)==true){
@@ -116,13 +116,14 @@ int main(int argc, char *argv[]){
     				}
     				else
 				    	cout << endl << "Invalid Input. Try Again" << endl;
+                delete [] ctemp;
                 }
                 catch(logic_error &e){
                     cout << e.what()<< endl << endl;
                 }
             }
 			cout << "Thank you! Exiting." << endl;
-    		return 0;
+            return 0;
         }
     }
     catch(string &file){
@@ -157,7 +158,7 @@ void print(Set<WebPage> web){
 				break;					//break out of input loop
 			}
 			cout << endl << index << "/" << web.size() << " result(s)" << endl;
-			cout << *x << endl;			//if not NULL then next result is outputted
+			cout << *x;			//if not NULL then next result is outputted
 			index++;					//increase index to show user which result they are on
 		}
 		cin.ignore();
