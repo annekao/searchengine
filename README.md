@@ -17,7 +17,10 @@
 		<./webpagetest>
 		<./webpage data/filename.txt>
 			filename.txt is up to the user but it MUST be in data directory
-			It is also important to note all the files listed in the main 	one is also part of the data directory (each file listed 		must start with data/)
+			
+			It is also important to note all the files listed in the main 	
+			one is also part of the data directory (each file listed 		
+			must start with data/)
 
 ###Homework 4 Known Errors:
 	Memory Leaks!
