@@ -85,7 +85,7 @@ int main(int argc, char *argv[]){
         			 	   print(result);
                         }
                         else
-                            cout << "Invalid input for AND." << endl;
+                            cout << "Invalid input for AND." << endl <<endl;
         			}
         			else if(temp=="or"&&input.find("(")==3&&input.find(")")==input.size()-1){
         			 	temp = input.substr(4,input.size()-5);
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
         			 	   print(result);
                         }
                         else
-                            cout << "Invalid input for AND." << endl;
+                            cout << "Invalid input for OR." << endl << endl;
         			}
         			else if(temp == input){
         			 	Set<WebPage> output = wpm.get(input);
