@@ -42,6 +42,7 @@ int main(int argc, char *argv[]){
     				else
 						wpm.add(*x,sTemp);				//if empty should default to adding file
 				}
+            }
     		string input;
     		while (input != "."){
                 try{
@@ -116,15 +117,12 @@ int main(int argc, char *argv[]){
     				else
 				    	cout << endl << "Invalid Input. Try Again" << endl;
                 }
-
                 catch(logic_error &e){
                     cout << e.what()<< endl << endl;
                 }
-
-			}
+            }
 			cout << "Thank you! Exiting." << endl;
     		return 0;
-    	    }
         }
     }
     catch(string &file){
