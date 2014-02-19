@@ -97,9 +97,9 @@ List<T>& List<T>::operator=(const List<T> & other){
 
 template<class T>
 List<T>::~List(){
-  delete head;  
-  //delete tail;
-  delete newptr; 
+ /* delete [] newptr;
+  delete [] head;  
+  delete [] tail; */
 }
 
 template<class T>

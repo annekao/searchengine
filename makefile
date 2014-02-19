@@ -17,7 +17,7 @@ SRC_DIR = src
 _OBJS=$(patsubst $(SRC_DIR)/%,$(BIN_DIR)/%,$(wildcard $(SRC_DIR)/*.cpp))
 OBJS=$(patsubst %.cpp,%.o,$(_OBJS))
 
-all: settest wptest
+all: settest wptest webpage
 
 $(BIN_DIR)/settest.o: $(SRC_DIR)/settest.cpp $(LIB_DIR)/set.h $(LIB_DIR)/list.h
 	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
@@ -25,11 +25,18 @@ $(BIN_DIR)/settest.o: $(SRC_DIR)/settest.cpp $(LIB_DIR)/set.h $(LIB_DIR)/list.h
 $(BIN_DIR)/webpagetest.o: $(SRC_DIR)/webpagetest.cpp webpage.h $(LIB_DIR)/set.h $(LIB_DIR)/list.h
 	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
 
+$(BIN_DIR)/webpage.o: $(SRC_DIR)/webpage.cpp webpage.h $(LIB_DIR)/map.h $(LIB_DIR)/set.h $(LIB_DIR)/list.h
+	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
+
 wptest: $(BIN_DIR)/webpagetest.o
 	$(CC) $^ -o $@ $(CPPFLAGS) 
 
 settest: $(BIN_DIR)/settest.o
 	$(CC) $^ -o $@ $(CPPFLAGS) 
+
+webpage: $(BIN_DIR)/webpage.o
+	$(CC) $^ -o $@ $(CPPFLAGS) 
+
 
 clean: 
 	rm -f *.o *~ 

@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include "lib/set.h"
 
+
 ifstream fin;
 class WebPage {
   public:
@@ -21,10 +22,11 @@ class WebPage {
 
     friend ostream & operator<< (ostream & os, const WebPage & page);
       /* Declares an operator we can use to print the web page. */
+    bool operator==(const WebPage & page);
 
   private:
     string infile;
-    Set<string>* sfile;
+    List<string> lfile;
     // you get to decide what goes here.
 };
 #endif
@@ -36,12 +38,11 @@ WebPage::WebPage(string filename) :
                   infile(filename){
   fin.open(infile);
   if(!fin){
-    throw logic_error("Invalid file. Exiting program.");
+    throw logic_error("Invalid file name in list. Please revise your file. Exiting program.");
   }
   string temp;
-  sfile = new Set<string>;
-  while(getline(fin,temp))
-    sfile->add(temp);
+  for(int i = 0; getline(fin,temp); i++)  //while there are lines to get
+    lfile.insert(i,temp);       //add it to the list
   fin.close();
 }
 
@@ -51,31 +52,34 @@ WebPage::~WebPage(){
 Set<string> WebPage::allWords () const{
   Set<string> words;
   string line;
-  for (string* x = sfile->first(); x!= NULL; x=sfile->next()){   
-      string line = *x;  
-  while(!line.empty()){  
-    string temp;
-      int i=0;
-    while(isalnum(line[i])){              //checks if alphanumeric
-      temp.push_back(line[i]);            //pushes back character until next word
-      i++;
+  for(int i =0; i < lfile.size(); i++){
+    line = lfile.get(i);      //for each item i the list, set to line
+    while(!line.empty()){     //while each line still has characters
+      string temp;
+        int i=0;
+      while(isalnum(line[i])){              //checks if alphanumeric
+        temp.push_back(line[i]);            //pushes back character until next word
+        i++;
+      }
+      int j = 0;
+      while(temp[j]){                      //converts to lower case
+        temp[j] = tolower(temp[j]);
+        j++;
+      }
+      if(words.contains(temp)==false && !temp.empty())  //makes sure there is no duplicate word
+        words.add(temp);
+      line.erase(0,i+1);        //moves to the next word in the string
     }
-    int j = 0;
-    while(temp[j]){                      //converts to lower case
-      temp[j] = tolower(temp[j]);
-      j++;
-    }
-    if(words.contains(temp)==false && !temp.empty())  //makes sure there is no duplicate word
-      words.add(temp);
-    line.erase(0,i+1);        //moves to the next word in the string
-  }
 }
   return words;
 }
 
 ostream & operator<< (ostream & os, const WebPage & page){
-  for (string* x = page.sfile->first(); x!= NULL; x=page.sfile->next()){
-    os << *x << endl;
-  }
+  for(int i =0; i < page.lfile.size(); i++)   //iterates through the list to os <<
+    os << page.lfile.get(i) <<endl;
   return os;
+}
+
+bool WebPage::operator==(const WebPage & page){
+  return(infile.compare(page.infile)==0);
 }
