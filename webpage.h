@@ -38,7 +38,7 @@ WebPage::WebPage(string filename) :
                   infile(filename){
   fin.open(infile);
   if(!fin){
-    throw logic_error("Invalid file name in list. Please revise your file. Exiting program.");
+    throw infile;
   }
   string temp;
   for(int i = 0; getline(fin,temp); i++)  //while there are lines to get

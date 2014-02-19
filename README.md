@@ -24,3 +24,10 @@
 
 ###Homework 4 Known Errors:
 	Memory Leaks!
+	A reoccuring issue with me...Essentially when I delete things it can cause segmentation faults or aborts.  
+	But if I don't delete them it causes lost memory..
+
+	One Warning that a char* is uninitialized.  
+	Not sure how to initialize it (initializing it to " " just outputs another warning) and is not really necessary to.
+
+	**Did not check with a command file passed in**
