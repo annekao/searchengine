@@ -126,10 +126,10 @@ bool Set<T>::isEmpty() const{
 
 template<class T>
 Set<T> Set<T>::setIntersection(const Set<T> & other) const{
-  Set<T> newset; 
+  Set<T> newset;
   for(int i = 0; i < other.size(); i++){
     for(int j = 0; j < size(); j++){
-      if (contains(other.internalStorage.get(i)) == contains(internalStorage.get(j)))
+      if (contains(other.internalStorage.get(i)) && contains(internalStorage.get(j)))
         newset.add(other.internalStorage.get(i));
       break;
     }
