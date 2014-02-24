@@ -23,8 +23,6 @@
 			must start with data/)
 
 ###Homework 4 Known Errors:
-	Memory Leaks!
-	A reoccuring issue with me...Essentially when I delete things it can cause segmentation faults or aborts.  
-	But if I don't delete them it causes lost memory..
+	Memory Leaks fixed Feb 23, 2014 (most of the problem came from list.h).
 
 	**Did not check with a command file passed in**
