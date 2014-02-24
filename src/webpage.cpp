@@ -1,3 +1,6 @@
+//because of fixed memory leaks there are segfaults and whatnot MUST FIX***
+//previous to memory leaks... there was a segfault when trying to find a nonexistant intersection..
+
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
@@ -82,7 +85,10 @@ int main(int argc, char *argv[]){
         			 	   	Set<WebPage> and1 = result;		//*** resets and1 to be result thus and2 will check for 
         			 	   	cword1 = strtok(NULL,",");		//an intersection of previous words
         			 	   }
-        			 	   print(result);
+                            if(result.size() == 0)
+                            cout << "No Intersections" << endl << endl;
+                            else 
+        			 	       print(result);
                         }
                         else
                             cout << "Invalid input for AND." << endl <<endl;
