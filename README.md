@@ -24,5 +24,9 @@
 
 ###Homework 4 Known Errors:
 	Memory Leaks fixed Feb 23, 2014 (most of the problem came from list.h).
+	Recently found a new bug-that was fixed.  Segfaults when there is no intersection.
+	
+	New Errors Post-Debugging (Feb 23):
+		Since fixing the memory leaks, webpage.cpp segfaults more often.  Will fix when there is time.
 
 	**Did not check with a command file passed in**
