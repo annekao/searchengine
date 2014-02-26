@@ -1,5 +1,6 @@
 //because of fixed memory leaks there are segfaults and whatnot MUST FIX***
-//previous to memory leaks... there was a segfault when trying to find a nonexistant intersection..
+//might need to git pull because there might be memory leaks on these files
+//when entering <.> it says <. has no association> than exists, if necessary need to fix
 
 #include <iostream>
 #include <stdexcept>
@@ -86,7 +87,7 @@ int main(int argc, char *argv[]){
         			 	   	cword1 = strtok(NULL,",");		//an intersection of previous words
         			 	   }
                             if(result.size() == 0)
-                            cout << "No Intersections" << endl << endl;
+                                cout << "No Intersections" << endl << endl;
                             else 
         			 	       print(result);
                         }

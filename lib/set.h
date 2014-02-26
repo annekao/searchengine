@@ -96,8 +96,8 @@ void Set<T>::remove(const T & item){
     throw logic_error (" doesn't exist.");
   }
   for (int i = 0; i < size(); i++){
-    if(internalStorage.get(i) == item){
-      internalStorage.remove(i);
+    if(internalStorage.get(i) == item){   //iterate through list to find item
+      internalStorage.remove(i);          // remove the item
     }
   }
 }
@@ -105,7 +105,7 @@ void Set<T>::remove(const T & item){
 template<class T>
 bool Set<T>::contains(const T & item) const{
   for (int i = 0; i < size(); i++){
-    if(internalStorage.get(i) == item)
+    if(internalStorage.get(i) == item)  //iterate through list to find item
       return true; 
   }
   return false;
@@ -118,7 +118,7 @@ int Set<T>::size() const{
 
 template<class T>
 bool Set<T>::isEmpty() const{
-  if (internalStorage.size()!=0)
+  if (internalStorage.size()!=0)  //check to see if size == 0
     return false;
   else
     return true;
@@ -129,8 +129,8 @@ Set<T> Set<T>::setIntersection(const Set<T> & other) const{
   Set<T> newset;
   for(int i = 0; i < other.size(); i++){
     for(int j = 0; j < size(); j++){
-      if (contains(other.internalStorage.get(i)) && contains(internalStorage.get(j)))
-        newset.add(other.internalStorage.get(i));
+      if (contains(other.internalStorage.get(i)) && contains(internalStorage.get(j)))   //if both items in each set returns true..
+        newset.add(other.internalStorage.get(i));   //add it to the newset and then return it
       break;
     }
   }
@@ -141,12 +141,12 @@ template<class T>
 Set<T> Set<T>::setUnion(const Set<T> & other) const{
   Set<T> newset;
   for(int i = 0; i < other.size(); i++)
-    newset.add(other.internalStorage.get(i));
+    newset.add(other.internalStorage.get(i)); //add everything from the first set to the newset
   for(int i = 0; i < size(); i++){
-    if(newset.contains(internalStorage.get(i)))
-      continue;
+    if(newset.contains(internalStorage.get(i))) //check if the newset contains everything from the other set
+      continue;                                  //if it does then just continue
     else
-      newset.add(internalStorage.get(i));
+      newset.add(internalStorage.get(i));       //if it doesn't then add 
   }
   return newset;
 }
@@ -155,15 +155,15 @@ template<class T>
 T* Set<T>::first(){
   if(isEmpty()==true)
     return NULL;
-  return &internalStorage.get(0);
+  return &internalStorage.get(0); //first will always be the value at 0
 }
 
 template<class T>
 T* Set<T>::next(){
   index++;
-  if(isEmpty()==true||index == size()){
-    index = 0;
+  if(isEmpty()==true||index == size()){   //if index is at the end of the list or empty is true
+    index = 0;                            //reset index
     return NULL;
   }
-  return &internalStorage.get(index);
+  return &internalStorage.get(index);   //index is a private variable that increments each time next is called
 }

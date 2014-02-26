@@ -1,4 +1,5 @@
 // required headers go here
+//since webpage.h isn't templated, can separate the two files .h and .cpp
 #ifndef WEBPAGE_H_
 #define WEBPAGE_H_
 #include <fstream>
