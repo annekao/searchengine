@@ -1,7 +1,3 @@
-//because of fixed memory leaks there are segfaults and whatnot MUST FIX***
-//might need to git pull because there might be memory leaks on these files
-//when entering <.> it says <. has no association> than exists, if necessary need to fix
-
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
@@ -48,10 +44,15 @@ int main(int argc, char *argv[]){
 				}
             }
     		string input;
-    		while (input != "."){
+    		while (1){
                 try{
     			    cout << "Enter <.> to exit the program." << endl << "Please enter your query: ";
        			    getline(cin,input);
+
+                    if(input == "."){
+                        cout << "Thank you! Exiting." << endl;
+                        return 0;
+                    }
     
         			int j = 0;
     			    while(input[j]){                      //converts to lower case
@@ -67,10 +68,10 @@ int main(int argc, char *argv[]){
         			and substr the string will be getting rid of those 4 spaces + 2 paranthesis
         			*/
         			//checks if and case and for user syntax
-                    char* ctemp;
         			if(temp=="and"&&input.find("(")==4&&input.find(")")==input.size()-1){
         			 	temp = input.substr(5,input.size()-6);
                         if(usererrorcheck(temp)==true){
+                           char ctemp[temp.size()+1];
         			 	   strcpy(ctemp, temp.c_str());	//convert to char* to tokenize
         			 	   char* cword1 = strtok(ctemp,",");	//extract first word
         			 	   string word1(cword1);		//convert char* to string to trim and input into set
@@ -97,6 +98,7 @@ int main(int argc, char *argv[]){
         			else if(temp=="or"&&input.find("(")==3&&input.find(")")==input.size()-1){
         			 	temp = input.substr(4,input.size()-5);
                         if(usererrorcheck(temp)==true){
+                           char ctemp[temp.size()+1];
         			 	   strcpy(ctemp, temp.c_str());	//convert to char* to tokenize
         			 	   char* cword1 = strtok(ctemp,",");	//extract first word
         			 	   string word1(cword1);		//convert char* to string to trim and input into set
@@ -128,8 +130,6 @@ int main(int argc, char *argv[]){
                     cout << e.what()<< endl << endl;
                 }
             }
-			cout << "Thank you! Exiting." << endl;
-            return 0;
         }
     }
     catch(string &file){
