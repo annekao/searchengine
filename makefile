@@ -19,13 +19,13 @@ OBJS=$(patsubst %.cpp,%.o,$(_OBJS))
 
 all: settest wptest webpage
 
-$(BIN_DIR)/settest.o: $(SRC_DIR)/settest.cpp $(LIB_DIR)/set.h $(LIB_DIR)/list.h
+$(BIN_DIR)/settest.o: $(SRC_DIR)/settest.cpp $(LIB_DIR)/stlset.h
 	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
 
-$(BIN_DIR)/webpagetest.o: $(SRC_DIR)/webpagetest.cpp webpage.h $(LIB_DIR)/set.h $(LIB_DIR)/list.h
+$(BIN_DIR)/webpagetest.o: $(SRC_DIR)/webpagetest.cpp webpage.h $(LIB_DIR)/stlset.h
 	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
 
-$(BIN_DIR)/webpage.o: $(SRC_DIR)/webpage.cpp webpage.h $(LIB_DIR)/map.h $(LIB_DIR)/set.h $(LIB_DIR)/list.h
+$(BIN_DIR)/webpage.o: $(SRC_DIR)/webpage.cpp webpage.h $(LIB_DIR)/stlset.h
 	$(CC) -c $< -o $@ $(CPPFLAGS) -I$(BIN_DIR)/
 
 wptest: $(BIN_DIR)/webpagetest.o
