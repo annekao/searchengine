@@ -6,16 +6,16 @@ int main(){
 	try{
 		WebPage w("data/wptest.txt");
 		Set<string> web = w.allWords();
-		for (string* x = web.first(); x!= NULL; x=web.next()){
-			cout << *x << endl;
+		for (Set<string>::iterator it = web.begin(); it!=web.end(); ++it){
+			cout << *it << endl;
 		}
 		cout << w;
 
 		WebPage w2("data/wptest2.txt"); //reads in as invalid file???
 		cout << w2;
 		Set<string> web2 = w2.allWords();
-		for (string* x = web2.first(); x!= NULL; x=web2.next()){
-			cout << *x << endl;
+		for (Set<string>::iterator it = web2.begin(); it!=web2.end(); ++it){
+			cout << *it << endl;
 		}
 		//Part 4
 		//Map<string, List<webpages>>
