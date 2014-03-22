@@ -13,7 +13,7 @@ ifstream fin;
 class WebPage {
   public:
     WebPage ();    // constructor that creates an empty page
-    WebPage (string filename);
+    WebPage (string filename, map<string, WebPage*> *l);
       /* constructor that initializes the page from the given file.
          Should throw an exception if the file does not exist
          or has other problems. */
@@ -62,6 +62,7 @@ class WebPage {
     Set<string> words;
     Set<WebPage*> incoming;
     Set<WebPage*> outgoing;
+    map<string,WebPage*> *allLinks;
     // you get to decide what goes here.
 };
 #endif
@@ -69,8 +70,8 @@ class WebPage {
 WebPage::WebPage(){
 }
 
-WebPage::WebPage(string filename) :
-                  infile(filename){
+WebPage::WebPage(string filename,map<string, WebPage*> *l) :
+                  infile(filename), allLinks(l){
 }
 
 WebPage::~WebPage(){
@@ -147,8 +148,19 @@ void WebPage::parse () {
           link.push_back(line[k]);
           k++;
         }
-        WebPage *dummy = new WebPage(link); //allocate memory for new page
-        addOutgoingLink(dummy);
+        //find matching strings, 
+        //if found just add the mapped webpage as outgoing link
+        //if not create a dummy link, add that to the map with the filename 
+        //then add the dummy link to the outgoing links
+        map<string,WebPage*>::iterator it = allLinks->find(link);
+        if(it!=allLinks->end()){
+          addOutgoingLink(it->second);
+        }
+        else{
+          WebPage *dummy = new WebPage(link,allLinks);
+          (*allLinks)[link] = dummy;
+          addOutgoingLink(dummy);
+        }
       }
 
       for(int j = 0; temp[j]; j++){      //converts to lower case

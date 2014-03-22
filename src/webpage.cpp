@@ -27,38 +27,33 @@ int main(int argc, char *argv[]){
     	else{
     		string temp;
             map<string,Set<WebPage>> wpm;
-            Set<WebPage> allLinks;
-    		
-            //creating all the webpages
-    		while(!fin.eof()){
-    			fin >> temp;							//iterate through each file
-                bool linked = false;	
-                for (Set<WebPage>::iterator it = allLinks.begin(); it!=allLinks.end(); ++it){
-                    Set<WebPage*> t =(*it).allOutgoingLinks();
-                    for(Set<WebPage*>::iterator i = t.begin(); i!=t.end(); ++i){
-                        if((*i)->filename() == temp){
-                            (*i)->parse();
-                            linked = true;
-                            allLinks.insert((**i));
-                        }
-                    }
-                }
-                if(!linked){
-                    WebPage wTemp(temp);
-                    wTemp.parse();
-                    allLinks.insert(wTemp);
-                }	
-            }
+            map<string, WebPage*> allLinks;
 
-            //creating the map for webpages
-            for(Set<WebPage>::iterator i = allLinks.begin(); i!=allLinks.end(); ++i){
-    			Set<string> web = (*i).allWords();		//put keywords into a temporary set
+            //create empty webpages
+            while(!fin.eof()){;
+                fin >> temp;
+                map<string,WebPage*>::iterator it = allLinks.find(temp);
+                if(it!=allLinks.end()){
+                    (*it->second).parse();
+                }
+                else{
+                    WebPage *wTemp = new WebPage(temp, &allLinks);
+                    wTemp->parse();
+                    allLinks[temp] = wTemp;
+                }
+            }
+    	
+         
+            //creating the map for webpage
+            
+            for(map<string,WebPage*>::iterator i = allLinks.begin(); i!=allLinks.end(); ++i){
+                Set<string> web = (i->second)->allWords();		//put keywords into a temporary set
     			Set<WebPage> sTemp;
-    			sTemp.insert(*i);						//add file to webpage set
+    			sTemp.insert(*(i->second));						//add file to webpage set
     			for (Set<string>::iterator it = web.begin(); it!=web.end(); ++it){	//iterate through key words
     				if(wpm.find(*it)!=wpm.end()){							//mostlikely to occur, check if already associated
     					Set<WebPage> reassociate = wpm.at(*it);	//have to "reassociate"
-    					reassociate.insert(*i);					//obtain previous set and copy it over
+    					reassociate.insert(*i->second);					//obtain previous set and copy it over
     					wpm.erase(*it);								//add the new webpage and remove the prev association
     					wpm[*it]=reassociate;				//reassociate
     				}
@@ -150,11 +145,8 @@ int main(int argc, char *argv[]){
     				else
 				    	cout << endl << "Invalid Input. Try Again" << endl;
                 
-                    for (Set<WebPage>::iterator it = allLinks.begin(); it!=allLinks.end(); ++it){ //delete dynamically allocated memory 
-                        Set<WebPage*> t =(*it).allOutgoingLinks();
-                        for(Set<WebPage*>::iterator i = t.begin(); i!=t.end(); ++i){
-                            delete *i;
-                        }
+                    for (map<string,WebPage*>::iterator it = allLinks.begin(); it!=allLinks.end(); ++it){ //delete dynamically allocated memory 
+                            delete it->second;
                     }
                 }
                 catch(logic_error &e){
@@ -166,6 +158,7 @@ int main(int argc, char *argv[]){
         }
     }
     catch(string &file){
+        cout<<file;
         cout << "Invalid file name in list. Please revise your file. Exiting program." << endl;
     }
 
