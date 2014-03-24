@@ -4,6 +4,8 @@
   + Name: Anne Kao
   + USC Email: annekao@usc.edu
   + USC ID: 4737655845
+###Homework 6 Make Instructions:
+	Please provide own data sets.
 
 ###Homework 4 Make Instructions:
 	This makefile makes three executables:
