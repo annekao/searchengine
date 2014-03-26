@@ -5,31 +5,34 @@
   + USC Email: annekao@usc.edu
   + USC ID: 4737655845
   
+***
+
 ###Homework 6 Make Instructions:
-	Please provide own data sets.
+####Part 1(Convert your ADTs to STL) and Part 2(Expand your WebPage class):
 
-###Homework 4 Make Instructions:
-	This makefile makes three executables:
-		settest (used in part 2 to test set.h)
-		webpagetest (used in part 3 to test webpage.h)
-		webpage (executable for part 4 that involves the user)
-	<make all>
-		to make all parts
-	Enter one of the three commands below to run the executables.
-		<./settest>
-		<./webpagetest>
-		<./webpage data/filename.txt>
-			filename.txt is up to the user but it MUST be in data directory
-			
-			It is also important to note all the files listed in the main 	
-			one is also part of the data directory (each file listed 		
-			must start with data/)
+>`make` to make all parts
 
-###Homework 4 Known Errors:
-	Memory Leaks fixed Feb 23, 2014 (most of the problem came from list.h).
-	Recently found a new bug-that was fixed.  Segfaults when there is no intersection.
-	
-	New Errors Post-Debugging (Feb 23):
-		Since fixing the memory leaks, webpage.cpp segfaults more often.  Will fix when there is time.
+To test the search executable with given data sets:
+`./search data/index.txt` or `./search data100/index.txt`
 
-	**Did not check with a command file passed in**
++ note that the executable has been renamed from HW4
++
+###Part 3(Put a Qt frontend on it):
+
+>Enter the correct subfolder cd qtsrc
+
+>`qmake -project`
+
+>`qmake`
+
+>`make`
+
+>enter `./qtsrc data/index.txt` or `./qtsrc data100/index.txt`
+
++ Note that the files are within the qtsrc folder AS WELL AS the project folder.  If using own test files to test qt interface it is best to save them inside qtsrc/.
++ Functionality is straight forward
++ Search by hitting the search button or using the enter key
++ Double-click in the list-box to open the new window
++ Double-click incoming/outgoing links to refresh the window
++ Search queries must be alphanumeric
++ Errors such as "no results" or "invalid input" open up a message box
