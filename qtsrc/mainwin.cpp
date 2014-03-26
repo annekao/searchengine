@@ -12,7 +12,7 @@
 using namespace std;
 
 MainWin::MainWin(map< string, Set<WebPage*> > allWords, map<string,WebPage*> allLinks, QWidget *parent) : 
-				words(allWords), links(allLinks), QWidget(parent){
+				QWidget(parent), words(allWords), links(allLinks){
 	btnQuit = new QPushButton("&Quit");
 	btnQuit->setMaximumWidth(80);
 	btnAbout = new QPushButton("&About");

@@ -10,7 +10,7 @@
 using namespace std;
 
 ResultsWin::ResultsWin(WebPage* webpage, map <string, WebPage*> allLinks, QWidget *parent) : 
-					wp(webpage), links(allLinks), QWidget(parent){
+					QWidget(parent), wp(webpage), links(allLinks){
 	content = new QTextEdit;
 	linkcontent(wp);
 
