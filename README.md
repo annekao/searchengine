@@ -13,6 +13,7 @@
 >`make` to make all parts
 
 To test the search executable with given data sets:
+
 `./search data/index.txt` or `./search data100/index.txt`
 
 + note that the executable has been renamed from HW4
