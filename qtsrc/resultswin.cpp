@@ -12,7 +12,6 @@ using namespace std;
 ResultsWin::ResultsWin(WebPage* webpage, map <string, WebPage*> allLinks, QWidget *parent) : 
 					QWidget(parent), wp(webpage), links(allLinks){
 	content = new QTextEdit;
-	linkcontent(wp);
 
 	incoming = new QListWidget;
 	outgoing = new QListWidget;
@@ -20,9 +19,16 @@ ResultsWin::ResultsWin(WebPage* webpage, map <string, WebPage*> allLinks, QWidge
 	btnQuit->setMaximumWidth(80);
 	in = new QLabel("Incoming:");
 	out = new QLabel("Outgoing:");
+	filename = new QLabel;
+
+	linkcontent(wp);
 	
 	inLinks(wp);
 	outLinks(wp);
+
+	QVBoxLayout* info = new QVBoxLayout;
+	info->addWidget(filename);
+	info->addWidget(content);
 
 	QVBoxLayout* inoutlinks = new QVBoxLayout;
 	inoutlinks->addWidget(in);
@@ -32,7 +38,7 @@ ResultsWin::ResultsWin(WebPage* webpage, map <string, WebPage*> allLinks, QWidge
 	inoutlinks->addWidget(btnQuit, 0, Qt::AlignRight);
 
 	QHBoxLayout* mainLayout = new QHBoxLayout;
-	mainLayout->addWidget(content);
+	mainLayout->addLayout(info);
 	mainLayout->addLayout(inoutlinks);
 
 	setLayout(mainLayout);
@@ -50,6 +56,8 @@ void ResultsWin::quitClicked(){
 
 void ResultsWin::linkcontent(WebPage* newwp){
 	content->clear();
+	filename->clear();
+	filename->setText(QString::fromStdString(newwp->filename() += " information"));
 	stringstream ss;
 	string text;
 	string word;
@@ -59,7 +67,7 @@ void ResultsWin::linkcontent(WebPage* newwp){
 		text += " ";
 	}
 	content->setText(QString::fromStdString(text));
-	content->setFixedSize(420,480);
+	content->setFixedSize(420,450);
 }
 
 void ResultsWin::inLinks(WebPage* newwp){

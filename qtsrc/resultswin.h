@@ -31,5 +31,6 @@ class ResultsWin : public QWidget
 		QListWidget * outgoing;
 		QLabel * in;
 		QLabel * out;
+		QLabel * filename;
 };
 #endif

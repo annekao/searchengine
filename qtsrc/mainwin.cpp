@@ -142,7 +142,7 @@ void MainWin::search(){
 void MainWin::openpageinfo(QListWidgetItem* item){
 	string select = item->text().toStdString();
 	info = new ResultsWin(links[select],links);
-	info->setWindowTitle(QString::fromStdString(select+=" info"));
+	info->setWindowTitle("Page Content");
 	info->setFixedSize(700,500);
 	info->show();
 }
