@@ -4,10 +4,11 @@
 #include <string>
 #include <cstring>
 #include <map>
+#include <fstream>
 #include "../webpage.h"
 
 void trim(string&);
-void print(Set<WebPage>);
+void print(Set<WebPage*>);
 bool usererrorcheck(string);
 
 int main(int argc, char *argv[]){
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]){
     	}
     	else{
     		string temp;
-            map<string,Set<WebPage>> wpm;
+            map<string,Set<WebPage*>> wpm;
             map<string, WebPage*> allLinks;
 
             //create empty webpages
@@ -47,20 +48,21 @@ int main(int argc, char *argv[]){
             //creating the map for webpage
             
             for(map<string,WebPage*>::iterator i = allLinks.begin(); i!=allLinks.end(); ++i){
-                Set<string> web = (i->second)->allWords();		//put keywords into a temporary set
-    			Set<WebPage> sTemp;
-    			sTemp.insert(*(i->second));						//add file to webpage set
-    			for (Set<string>::iterator it = web.begin(); it!=web.end(); ++it){	//iterate through key words
-    				if(wpm.find(*it)!=wpm.end()){							//mostlikely to occur, check if already associated
-    					Set<WebPage> reassociate = wpm.at(*it);	//have to "reassociate"
-    					reassociate.insert(*i->second);					//obtain previous set and copy it over
-    					wpm.erase(*it);								//add the new webpage and remove the prev association
-    					wpm[*it]=reassociate;				//reassociate
-    				}
-    				else
-						wpm[*it]=sTemp;				//if empty should default to adding file
-				}
+                Set<string> web = (i->second)->allWords();      //put keywords into a temporary set
+                Set<WebPage*> sTemp;
+                sTemp.insert(i->second);                        //add file to webpage set
+                for (Set<string>::iterator it = web.begin(); it!=web.end(); ++it){  //iterate through key words
+                    if(wpm.find(*it)!=wpm.end()){                            //mostlikely to occur, check if already associated
+                        Set<WebPage*> reassociate = wpm.at(*it);  //have to "reassociate"
+                        reassociate.insert(i->second);                 //obtain previous set and copy it over
+                        wpm.erase(*it);                              //add the new webpage and remove the prev association
+                        wpm[*it]=reassociate;                //reassociate
+                    }
+                    else
+                        wpm[*it]=sTemp;              //if empty should default to adding file
+                }
             }
+
                 
     		string input;
     		while (1){
@@ -95,15 +97,15 @@ int main(int argc, char *argv[]){
         			 	   char* cword1 = strtok(ctemp,",");	//extract first word
         			 	   string word1(cword1);		//convert char* to string to trim and input into set
         			 	   trim(word1);
-        			 	   Set<WebPage> and1 = wpm.at(word1);
-        			 	   Set<WebPage> result;
+        			 	   Set<WebPage*> and1 = wpm.at(word1);
+        			 	   Set<WebPage*> result;
         			 	   cword1 = strtok(NULL,",");	//could just do ", " to get rid of leading white space
         			 	   while(cword1!=NULL){		//but i already made the trim function so too bad
         			 	   	string word2(cword1);	//essentially doing what I did above
         			 	   	trim(word2);
-        			 	   	Set<WebPage> and2 = wpm.at(word2);
+        			 	   	Set<WebPage*> and2 = wpm.at(word2);
         			 	   	result = and1.setIntersection(and2);	//check for intersections
-        			 	   	Set<WebPage> and1 = result;		//*** resets and1 to be result thus and2 will check for 
+        			 	   	Set<WebPage*> and1 = result;		//*** resets and1 to be result thus and2 will check for 
         			 	   	cword1 = strtok(NULL,",");		//an intersection of previous words
         			 	   }
                             if(result.size() == 0)
@@ -122,15 +124,15 @@ int main(int argc, char *argv[]){
         			 	   char* cword1 = strtok(ctemp,",");	//extract first word
         			 	   string word1(cword1);		//convert char* to string to trim and input into set
         			 	   trim(word1);
-        			 	   Set<WebPage> and1 = wpm.at(word1);
-        			 	   Set<WebPage> result;
+        			 	   Set<WebPage*> and1 = wpm.at(word1);
+        			 	   Set<WebPage*> result;
         			 	   cword1 = strtok(NULL,",");	//could just do ", " to get rid of leading white space
         			 	   while(cword1!=NULL){		//but i already made the trim function so too bad
         			 	   	string word2(cword1);
         			 	   	trim(word2);
-        			 	   	Set<WebPage> and2 = wpm.at(word2);
+        			 	   	Set<WebPage*> and2 = wpm.at(word2);
         			 	   	result = and1.setUnion(and2);
-        			 	   	Set<WebPage> and1 = result;
+        			 	   	Set<WebPage*> and1 = result;
         			 	   	cword1 = strtok(NULL,",");
         			 	   }
         			 	   print(result);
@@ -139,7 +141,7 @@ int main(int argc, char *argv[]){
                             cout << "Invalid input for OR." << endl << endl;
         			}
         			else if(temp == input){
-        			 	Set<WebPage> output = wpm.at(input);
+        			 	Set<WebPage*> output = wpm.at(input);
         			 	print(output);
     				}
     				else
@@ -171,13 +173,14 @@ void trim(string& word){
     word = word.substr(0, pos+1);			//trims
 }
 
-void print(Set<WebPage> web){
+void print(Set<WebPage*> web){
 	string input;
 	int index = 1;
-    Set<WebPage>::iterator it = web.begin();
+    Set<WebPage*>::iterator it = web.begin();
+    WebPage* wp = *it;
     cout << endl << "# of Pages: " << web.size() << endl;
     cout << index << "/" << web.size() << " result(s)" << endl;
-    cout << *it <<endl;		//cout first result
+    cout << *wp <<endl;		//cout first result
     index++;
 
     while(input != "quit"){
@@ -186,13 +189,14 @@ void print(Set<WebPage> web){
 
 		if (input == "next"){
             ++it;
+            wp = *it;
 			if (it == web.end()){				//if it's NULL must be the last page
 				cout << endl << "This is the last result. Exiting query." << endl <<endl;
 				cin.ignore();		
 				break;					//break out of input loop
 			}
 			cout << endl << index << "/" << web.size() << " result(s)" << endl;
-			cout << *it;			//if not NULL then next result is outputted
+			cout << *wp;			//if not NULL then next result is outputted
 			index++;					//increase index to show user which result they are on
         }
 		cin.ignore();
